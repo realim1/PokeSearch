@@ -1,9 +1,14 @@
+import React, { useState } from "react";
+
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
+	const router = useRouter();
+	const [pokemon, setPokemon] = useState("");
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -20,6 +25,20 @@ const Home: NextPage = () => {
 					height={144}
 				/>
 				<h1 className={styles.title}>PokéSearch</h1>
+				<input
+					type='text'
+					id='pokemon'
+					name='pokemon'
+					placeholder="Enter Pokémon's Name or Id"
+					value={pokemon}
+					onChange={(e) => {
+						setPokemon(e.target.value);
+					}}
+				/>
+
+				<button onClick={() => router.push(`/pokemon/${pokemon}`)}>
+					PokéSearch
+				</button>
 			</main>
 
 			<footer className={styles.footer}>
