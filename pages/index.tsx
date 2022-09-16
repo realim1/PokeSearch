@@ -4,7 +4,7 @@ import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Image from "next/image";
-import styles from "../styles/Home.module.css";
+import styles from "../styles/Home.module.scss";
 
 const Home: NextPage = () => {
 	const router = useRouter();
@@ -25,20 +25,24 @@ const Home: NextPage = () => {
 					height={144}
 				/>
 				<h1 className={styles.title}>PokéSearch</h1>
-				<input
-					type='text'
-					id='pokemon'
-					name='pokemon'
-					placeholder="Enter Pokémon's Name or Id"
-					value={pokemon}
-					onChange={(e) => {
-						setPokemon(e.target.value);
-					}}
-				/>
-
-				<button onClick={() => router.push(`/pokemon/${pokemon}`)}>
-					PokéSearch
-				</button>
+				<div className={styles.pokemonContainer}>
+					<input
+						type='text'
+						id='pokemon'
+						name='pokemon'
+						placeholder="Enter Pokémon's Name or Id"
+						value={pokemon}
+						className={styles.pokemonInput}
+						onChange={(e) => {
+							setPokemon(e.target.value);
+						}}
+					/>
+					<button
+						className={styles.pokemonButton}
+						onClick={() => router.push(`/pokemon/${pokemon}`)}>
+						PokéSearch
+					</button>
+				</div>
 			</main>
 
 			<footer className={styles.footer}>
