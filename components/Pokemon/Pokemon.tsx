@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { useQuery, gql } from "@apollo/client";
+import styles from "./Pokemon.module.scss";
 
 const QUERY = gql`
 	query Pokemon_v2_pokemon($where: pokemon_v2_pokemon_bool_exp) {
@@ -21,7 +21,13 @@ export default function Pokemon({ identifier }: { identifier: number | null }) {
 	});
 
 	if (loading) {
-		return <h2>Loading...</h2>;
+		return (
+			<div className={styles.Pokemon}>
+				<div className={styles["Pokemon__pokeball"]}>
+					<div className={styles["Pokemon__pokeball__button"]}></div>
+				</div>
+			</div>
+		);
 	}
 
 	if (error) {
