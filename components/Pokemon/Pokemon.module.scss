@@ -1,8 +1,33 @@
+@import "../../assets//styles//breakpoints";
+
 .Pokemon {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+	width: 100%;
+	padding-right: 15px;
+	padding-left: 15px;
+	margin: 2rem auto;
+	display: flex;
+	justify-content: center;
+	@media (max-width: $xxl) {
+		max-width: 1320px;
+	}
+	@media (max-width: $xl) {
+		max-width: 1140px;
+	}
+	@media (max-width: $lg) {
+		max-width: 960px;
+	}
+	@media (max-width: $md) {
+		max-width: 720px;
+	}
+	@media (max-width: $sm) {
+		max-width: 540px;
+	}
+	&__preloader {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
 	&__pokeball {
 		position: relative;
 		width: 200px;

@@ -1,0 +1,19 @@
+@import "../../assets//styles/colors";
+.Card {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	width: 100%;
+	max-width: 20rem;
+	background-color: $pokeball-off-white;
+	color: #000;
+	border-radius: 10px;
+	&__header {
+	}
+
+	&__body {
+	}
+
+	&__footer {
+	}
+}
