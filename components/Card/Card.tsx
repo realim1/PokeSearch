@@ -6,6 +6,12 @@ interface CardProps {
 	children: ReactNode;
 }
 
+interface CardImgProps {
+	src: string;
+	alt: string;
+	className?: string;
+}
+
 interface CardHeaderProps {
 	children: ReactNode;
 }
@@ -25,12 +31,23 @@ const getChildByDisplayName = (children: ReactNode, displayName: string) =>
 
 const Card = ({ children }: CardProps) => {
 	const header = getChildByDisplayName(children, "Header");
+	const img = getChildByDisplayName(children, "Img");
 	const body = getChildByDisplayName(children, "Body");
 	const footer = getChildByDisplayName(children, "Footer");
 	return (
 		<div className={styles["Card"]}>
-			{header} {body} {footer}
+			{img} {header} {body} {footer}
 		</div>
+	);
+};
+
+const Img = ({ src, alt, className }: CardImgProps) => {
+	return (
+		<img
+			className={`${styles["Card__img"]} ${className}`}
+			src={src}
+			alt={alt}
+		/>
 	);
 };
 
@@ -48,6 +65,9 @@ const Footer = ({ children }: CardFooterProps) => {
 
 Header.displayName = "Header";
 Card.Header = Header;
+
+Img.displayName = "Img";
+Card.Img = Img;
 
 Body.displayName = "Body";
 Card.Body = Body;
