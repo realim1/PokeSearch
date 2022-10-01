@@ -10,6 +10,7 @@ interface CardImgProps {
 	src: string;
 	alt: string;
 	className?: string;
+	imgClassName?: string;
 }
 
 interface CardHeaderProps {
@@ -42,13 +43,15 @@ const Card = ({ children }: CardProps) => {
 	);
 };
 
-const Img = ({ src, alt, className = "" }: CardImgProps) => {
+const Img = ({ src, alt, className = "", imgClassName = "" }: CardImgProps) => {
 	return (
-		<img
-			className={`${styles["Card__img"]} ${className}`}
-			src={src}
-			alt={alt}
-		/>
+		<div className={`${styles["Card__img_container"]} ${className}`}>
+			<img
+				className={`${styles["Card__img"]} ${imgClassName}`}
+				src={src}
+				alt={alt}
+			/>
+		</div>
 	);
 };
 

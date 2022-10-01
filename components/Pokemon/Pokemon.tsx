@@ -45,9 +45,6 @@ export default function Pokemon({ identifier }: { identifier: number | null }) {
 		return null;
 	}
 	console.log(data);
-	console.log(
-		JSON.parse(data.pokemon_v2_pokemon[0].pokemon_v2_pokemonsprites[0].sprites)
-	);
 
 	const sprites = JSON.parse(
 		data.pokemon_v2_pokemon[0].pokemon_v2_pokemonsprites[0].sprites
@@ -61,6 +58,15 @@ export default function Pokemon({ identifier }: { identifier: number | null }) {
 					className={
 						data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[0]
 							.pokemon_v2_type.name
+					}
+					imgClassName={
+						data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[0]
+							.pokemon_v2_type.name === "flying" ||
+						(data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[1] &&
+							data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[1]
+								.pokemon_v2_type.name === "flying")
+							? "floating"
+							: "shift"
 					}
 				/>
 				<Card.Header>
