@@ -64,8 +64,10 @@ export default function Pokemon({ identifier }: { identifier: number | null }) {
 					}
 				/>
 				<Card.Header>
-					<h1>{data.pokemon_v2_pokemon[0].name}</h1>
-					<span>#002</span>
+					<h1 className={`text-capitalize mt-2 mb-1`}>
+						{data.pokemon_v2_pokemon[0].name}
+					</h1>
+					<span>#{identifier}</span>
 					<div className={styles["Pokemon__types"]}>
 						{data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes.map(
 							(type: any, key: any) => {
