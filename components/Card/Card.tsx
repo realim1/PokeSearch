@@ -14,6 +14,7 @@ interface CardImgProps {
 
 interface CardHeaderProps {
 	children: ReactNode;
+	className?: string;
 }
 
 interface CardBodyProps {
@@ -41,7 +42,7 @@ const Card = ({ children }: CardProps) => {
 	);
 };
 
-const Img = ({ src, alt, className }: CardImgProps) => {
+const Img = ({ src, alt, className = "" }: CardImgProps) => {
 	return (
 		<img
 			className={`${styles["Card__img"]} ${className}`}
@@ -51,8 +52,10 @@ const Img = ({ src, alt, className }: CardImgProps) => {
 	);
 };
 
-const Header = ({ children }: CardHeaderProps) => {
-	return <div className={styles["Card__header"]}>{children}</div>;
+const Header = ({ children, className = "" }: CardHeaderProps) => {
+	return (
+		<div className={`${styles["Card__header"]} ${className}`}>{children}</div>
+	);
 };
 
 const Body = ({ children }: CardBodyProps) => {

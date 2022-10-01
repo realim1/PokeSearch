@@ -4,7 +4,7 @@
 	justify-content: center;
 	flex-direction: column;
 	width: 100%;
-	max-width: 20rem;
+	max-width: 40rem;
 	background-color: $pokeball-off-white;
 	color: #000;
 	border-radius: 10px;
@@ -12,6 +12,11 @@
 		border-radius: 10px 10px 0 0;
 	}
 	&__header {
+		background-color: rgba(0, 0, 0, 0.03);
+		border-bottom: 2px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 	}
 
 	&__body {

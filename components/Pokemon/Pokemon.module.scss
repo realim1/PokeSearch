@@ -71,6 +71,9 @@
 			animation: blink 0.5s alternate 7;
 		}
 	}
+	&__types {
+		display: inline-flex;
+	}
 }
 @keyframes blink {
 	from {

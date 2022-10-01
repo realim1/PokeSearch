@@ -64,14 +64,16 @@ export default function Pokemon({ identifier }: { identifier: number | null }) {
 				/>
 				<Card.Header>
 					<h1>{data.pokemon_v2_pokemon[0].name}</h1>
+					<span>#002</span>
+					<div className={styles["Pokemon__types"]}>
+						{data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes.map(
+							(type: any, key: any) => {
+								return <h2 key={key}>{type.pokemon_v2_type.name}</h2>;
+							}
+						)}
+					</div>
 				</Card.Header>
-				<Card.Body>
-					{data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes.map(
-						(type: any, key: any) => {
-							return <h2 key={key}>{type.pokemon_v2_type.name}</h2>;
-						}
-					)}
-				</Card.Body>
+				{/* <Card.Body></Card.Body> */}
 			</Card>
 		</div>
 	);
