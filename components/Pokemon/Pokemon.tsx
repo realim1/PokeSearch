@@ -1,6 +1,7 @@
 import { useQuery, gql } from "@apollo/client";
 import styles from "./Pokemon.module.scss";
 import Card from "../Card/Card";
+import Pill from "../Pill/Pill";
 
 const QUERY = gql`
 	query Pokemon_v2_pokemon($where: pokemon_v2_pokemon_bool_exp) {
@@ -68,7 +69,11 @@ export default function Pokemon({ identifier }: { identifier: number | null }) {
 					<div className={styles["Pokemon__types"]}>
 						{data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes.map(
 							(type: any, key: any) => {
-								return <h2 key={key}>{type.pokemon_v2_type.name}</h2>;
+								return (
+									<Pill className={type.pokemon_v2_type.name} key={key}>
+										{type.pokemon_v2_type.name}
+									</Pill>
+								);
 							}
 						)}
 					</div>
