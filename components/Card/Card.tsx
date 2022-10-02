@@ -20,6 +20,7 @@ interface CardHeaderProps {
 
 interface CardBodyProps {
 	children: ReactNode;
+	className?: string;
 }
 
 interface CardFooterProps {
@@ -61,8 +62,8 @@ const Header = ({ children, className = "" }: CardHeaderProps) => {
 	);
 };
 
-const Body = ({ children }: CardBodyProps) => {
-	return <div className={styles["Card__body"]}>{children}</div>;
+const Body = ({ children, className = "" }: CardBodyProps) => {
+	return <div className={`styles["Card__body"] ${className}`}>{children}</div>;
 };
 
 const Footer = ({ children }: CardFooterProps) => {

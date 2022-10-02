@@ -15,6 +15,9 @@ const QUERY = gql`
 			pokemon_v2_pokemonsprites {
 				sprites
 			}
+			pokemon_v2_pokemonstats {
+				base_stat
+			}
 		}
 	}
 `;
@@ -86,7 +89,9 @@ export default function Pokemon({ identifier }: { identifier: number | null }) {
 						)}
 					</div>
 				</Card.Header>
-				{/* <Card.Body></Card.Body> */}
+				<Card.Body className='px-2'>
+					<h2>Stats</h2>
+				</Card.Body>
 			</Card>
 		</div>
 	);
