@@ -3,17 +3,6 @@
 	animation-duration: 3s;
 	animation-iteration-count: infinite;
 	animation-timing-function: ease-in-out;
-	@keyframes floating {
-		0% {
-			transform: translate(0, 0px);
-		}
-		50% {
-			transform: translate(0, 3rem);
-		}
-		100% {
-			transform: translate(0, -0px);
-		}
-	}
 }
 
 .shift {
@@ -21,15 +10,34 @@
 	animation-duration: 2s;
 	animation-iteration-count: infinite;
 	animation-timing-function: ease-in-out;
-	@keyframes shifting {
-		0% {
-			transform: translate(0, 0px);
-		}
-		50% {
-			transform: translate(1.5rem, 0);
-		}
-		100% {
-			transform: translate(0, -0px);
-		}
+}
+
+@keyframes floating {
+	0% {
+		transform: translate(0, 0px);
+	}
+	50% {
+		transform: translate(0, 3rem);
+	}
+	100% {
+		transform: translate(0, -0px);
+	}
+}
+
+@keyframes shifting {
+	0% {
+		transform: translate(0, 0px);
+	}
+	50% {
+		transform: translate(1.5rem, 0);
+	}
+	100% {
+		transform: translate(0, -0px);
+	}
+}
+
+@keyframes progressBar {
+	0% {
+		width: 0;
 	}
 }

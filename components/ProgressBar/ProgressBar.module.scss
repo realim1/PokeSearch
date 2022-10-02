@@ -1,0 +1,28 @@
+@import "../../assets/styles/animations";
+
+.ProgressBar {
+	margin-bottom: 0.75rem;
+
+	&__label {
+		margin-bottom: 0.25rem;
+		text-transform: capitalize;
+	}
+
+	&__progress {
+		height: 1.5rem;
+		display: flex;
+		border-radius: 0.25rem;
+		overflow: hidden;
+		background-color: rgba(0, 0, 0, 0.03);
+	}
+
+	&__progressbar {
+		color: white;
+		font-size: 1rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		animation: progressBar 2s ease-in-out;
+		animation-fill-mode: both;
+	}
+}
