@@ -21,13 +21,13 @@ jobs:
     permissions:
       packages: write
       contents: read
-      steps:
-        - uses: actions/checkout@v3
-        - uses: actions/setup-node@v3
-          with:
-            node-version: 18
-            registry-url: ghcr.io
-        - run: npm ci
-        - run: docker push ghcr.io/realim1/pokesearch:latest
-          env:
-            NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          registry-url: ghcr.io
+      - run: npm ci
+      - run: docker push ghcr.io/realim1/pokesearch:latest
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
