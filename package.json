@@ -7,7 +7,7 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		"build:image": "docker build -t ghcr.io/realim1/pokesearch ."
+		"build:image": "npm run build && docker build -t ghcr.io/realim1/pokesearch ."
 	},
 	"dependencies": {
 		"@apollo/client": "^3.6.9",
