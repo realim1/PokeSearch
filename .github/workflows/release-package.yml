@@ -15,8 +15,6 @@ jobs:
       - run: npm ci
       - run: npm run build:image
       - run: docker push ghcr.io/realim1/pokesearch:latest
-          with:
-              repo-token: ${{ secrets.GITHUB_TOKEN }}
 
   # publish:
   #   needs: build
