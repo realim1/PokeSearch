@@ -14,6 +14,7 @@ jobs:
           node-version: 18
       - run: npm ci
       - run: npm run build:image
+      - run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ secrets.USERNAME }} --password-stdin
       - run: docker push ghcr.io/realim1/pokesearch:latest
 
   # publish:
