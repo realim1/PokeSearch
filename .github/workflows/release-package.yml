@@ -5,7 +5,7 @@ on:
     types: [created]
 
 jobs:
-  build:
+  build-and-publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -14,20 +14,23 @@ jobs:
           node-version: 18
       - run: npm ci
       - run: npm run build:image
-
-  publish:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      packages: write
-      contents: read
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          registry-url: ghcr.io
-      - run: npm ci
       - run: docker push ghcr.io/realim1/pokesearch:latest
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          with:
+              repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+  # publish:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     packages: write
+  #     contents: read
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 18
+  #         registry-url: ghcr.io
+  #     - run: npm ci
+  #     - run: docker push ghcr.io/realim1/pokesearch:latest
+  #       env:
+  #         NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
