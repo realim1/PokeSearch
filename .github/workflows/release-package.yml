@@ -13,7 +13,7 @@ jobs:
         with:
           node-version: 18
       - run: npm ci
-      - run: npm build
+      - run: npm run build:image
 
   publish:
     needs: build
