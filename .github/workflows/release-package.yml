@@ -60,6 +60,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
+      - run: npm run build:image
 
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
