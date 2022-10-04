@@ -40,10 +40,7 @@ jobs:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
     steps:
-      - name: Username
       - run: echo ${{ secrets.USERNAME }}
-
-      - name: TOKEN
       - run: echo ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check out the repo
