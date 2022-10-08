@@ -63,7 +63,9 @@ const Header = ({ children, className = "" }: CardHeaderProps) => {
 };
 
 const Body = ({ children, className = "" }: CardBodyProps) => {
-	return <div className={`styles["Card__body"] ${className}`}>{children}</div>;
+	return (
+		<div className={`${styles["Card__body"]} ${className}`}>{children}</div>
+	);
 };
 
 const Footer = ({ children }: CardFooterProps) => {
