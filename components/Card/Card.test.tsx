@@ -3,11 +3,33 @@ import "@testing-library/jest-dom/extend-expect";
 import Card from "./Card";
 
 describe("Renders", () => {
-	it("should render Card Header", () => {
-		const { getByText } = render(<Card.Header>Test Card Header</Card.Header>);
-		const cardHeaderElem = getByText("Test Card Header");
-		expect(cardHeaderElem).toBeInTheDocument();
-		expect(cardHeaderElem).toHaveClass("Card__header");
+	describe("Card Header => ", () => {
+		it("should render Card Header", () => {
+			const { getByText } = render(<Card.Header>Test Card Header</Card.Header>);
+			const cardHeaderElem = getByText("Test Card Header");
+			expect(cardHeaderElem).toBeInTheDocument();
+			expect(cardHeaderElem).toHaveClass("Card__header");
+		});
+		it("should render Card Header with children", () => {
+			const { container } = render(
+				<Card>
+					<Card.Header>
+						<h1>Header Title</h1>
+					</Card.Header>
+				</Card>
+			);
+			const cardHeaderElem = container.querySelector(".Card__header");
+			expect(cardHeaderElem?.children.length).toBeGreaterThan(0);
+		});
+		it("should add className to Card Header", () => {
+			const { getByText } = render(
+				<Card>
+					<Card.Header className='Card__test'>Card Header Test</Card.Header>
+				</Card>
+			);
+			const cardHeaderElem = getByText("Card Header Test");
+			expect(cardHeaderElem).toHaveClass("Card__test");
+		});
 	});
 	it("should render Card Body", () => {
 		const { getByText } = render(<Card.Body>Test Card Body</Card.Body>);
