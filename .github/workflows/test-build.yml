@@ -12,10 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - name: Run Client-side Unit Tests
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-      with:
-        node-version: 18
-      run: npm ci
-      run: npm test
+        uses: actions/checkout@v3
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+        run: npm ci
+        run: npm test
     
