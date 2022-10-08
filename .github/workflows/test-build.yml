@@ -1,0 +1,15 @@
+name: Test Build
+
+on:
+  push:
+    branches:
+      - "grandmaster"
+
+jobs:
+  run_tests:
+    name: Run Unit Tests
+    runs-on: ubuntu-latest
+    steps: 
+      run: npm ci
+      run: npm test
+    
