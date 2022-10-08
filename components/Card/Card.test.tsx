@@ -31,11 +31,34 @@ describe("Renders", () => {
 			expect(cardHeaderElem).toHaveClass("Card__test");
 		});
 	});
-	it("should render Card Body", () => {
-		const { getByText } = render(<Card.Body>Test Card Body</Card.Body>);
-		const cardBodyElem = getByText("Test Card Body");
-		expect(cardBodyElem).toBeInTheDocument();
-		expect(cardBodyElem).toHaveClass("Card__body");
+	describe("Card Body => ", () => {
+		it("should render Card Body", () => {
+			const { getByText } = render(<Card.Body>Test Card Body</Card.Body>);
+			const cardBodyElem = getByText("Test Card Body");
+			expect(cardBodyElem).toBeInTheDocument();
+			expect(cardBodyElem).toHaveClass("Card__body");
+		});
+		it("should render Card Body with children", () => {
+			const { container } = render(
+				<Card>
+					<Card.Body>
+						<section>Title</section>
+						<div>Description</div>
+					</Card.Body>
+				</Card>
+			);
+			const cardBodyElem = container.querySelector(".Card__body");
+			expect(cardBodyElem?.children.length).toBeGreaterThan(0);
+		});
+		it("should add className to Card Body", () => {
+			const { getByText } = render(
+				<Card>
+					<Card.Header className='Card__test'>Card Body Test</Card.Header>
+				</Card>
+			);
+			const cardBodyElem = getByText("Card Body Test");
+			expect(cardBodyElem).toHaveClass("Card__test");
+		});
 	});
 	it("should render Card Footer", () => {
 		const { getByText } = render(<Card.Footer>Test Card Footer</Card.Footer>);
