@@ -16,6 +16,5 @@ jobs:
         with:
           node-version: 18
       - name: Run Client-side Unit Tests
-        run: npm ci
-        run: npm test
+          run: npm ci && npm test
     
