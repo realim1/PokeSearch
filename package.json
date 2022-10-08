@@ -7,7 +7,7 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		"test": "jest --watch",
+		"test": "jest",
 		"build:image": "npm run build && docker build -t ghcr.io/realim1/pokesearch ."
 	},
 	"dependencies": {
