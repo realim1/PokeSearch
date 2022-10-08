@@ -22,9 +22,4 @@ describe("Renders", () => {
 		const pillElem = getByText("Test Pill");
 		expect(pillElem).toHaveClass("Pill__test");
 	});
-	it("should add className to Pill", () => {
-		const { getByText } = render(<Pill className='Pill__tes'>Test Pill</Pill>);
-		const pillElem = getByText("Test Pill");
-		expect(pillElem).toHaveClass("Pill__test");
-	});
 });
