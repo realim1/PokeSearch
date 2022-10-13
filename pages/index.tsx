@@ -6,6 +6,8 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.scss";
 
+import PokeballImg from "../assets/images/Pokeball.png";
+
 const Home: NextPage = () => {
 	const router = useRouter();
 	const [pokemon, setPokemon] = useState("");
@@ -18,12 +20,7 @@ const Home: NextPage = () => {
 			</Head>
 
 			<main className={styles.main}>
-				<Image
-					src='/assets/images/Pokeball.png'
-					alt='Pokeball Logo'
-					width={144}
-					height={144}
-				/>
+				<Image src={PokeballImg} alt='Pokeball Logo' width={144} height={144} />
 				<h1 className={styles.title}>PokéSearch</h1>
 				<div className={styles.pokemonContainer}>
 					<input
