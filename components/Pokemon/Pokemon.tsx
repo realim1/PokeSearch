@@ -2,8 +2,8 @@ import { useQuery, gql } from "@apollo/client";
 import styles from "./Pokemon.module.scss";
 import Card from "../Card/Card";
 import Pill from "../Pill/Pill";
-import ProgressBar from "../ProgressBar/ProgressBar";
 import Stats from "./Modules/Stats/Stats";
+import Profile from "./Modules/Profile/Profile";
 
 const QUERY = gql`
 	query Pokemon_v2_pokemon($where: pokemon_v2_pokemon_bool_exp) {
@@ -125,86 +125,25 @@ export default function Pokemon({ identifier }: { identifier: number | null }) {
 						}
 					/>
 					<hr className='mt-3' />
-					<h2>Profile</h2>
-					<div>
-						<div>
-							<b>Weight 🐘: </b>
-							<span>{data.pokemon_v2_pokemon[0].weight * 0.1}kg</span>
-						</div>
-						<div>
-							<b>Height 📏: </b>
-							<span>{data.pokemon_v2_pokemon[0].height / 10}m</span>
-						</div>
-						<div>
-							<b>Base Capture Rate 🥅: </b>
-							<span>
-								{data.pokemon_v2_pokemon[0].pokemon_v2_pokemonspecy
-									.capture_rate / 255}
-								%
-							</span>
-						</div>
-						<div>
-							<b>Gender Ratios 🏳️‍⚧️: </b>
-							<span>
-								{(data.pokemon_v2_pokemon[0].pokemon_v2_pokemonspecy
-									.gender_rate /
-									8) *
-									100}
-								% ♀️/{" "}
-								{((8 -
-									data.pokemon_v2_pokemon[0].pokemon_v2_pokemonspecy
-										.gender_rate) /
-									8) *
-									100}
-								% ♂️
-							</span>
-						</div>
-						<div>
-							<b>Egg Groups 🥚:</b>
-							{data.pokemon_v2_pokemon[0].pokemon_v2_pokemonspecy.pokemon_v2_pokemonegggroups.map(
-								(egg: any, index: number) => {
-									return (
-										<span key={index}> {egg.pokemon_v2_egggroup.name} /</span>
-									);
-								}
-							)}
-						</div>
-						<div>
-							<b>Hatch Steps 🚶‍♂️: </b>
-							<span>
-								{255 *
-									(1 +
-										data.pokemon_v2_pokemon[0].pokemon_v2_pokemonspecy
-											.hatch_counter)}
-							</span>
-						</div>
-						<div>
-							<b>Abilities 🧠:</b>
-							{data.pokemon_v2_pokemon[0].pokemon_v2_pokemonabilities.map(
-								(ability: any, index: number) => {
-									return (
-										<span key={index}>
-											{" "}
-											{ability.pokemon_v2_ability.name} /
-										</span>
-									);
-								}
-							)}
-						</div>
-						<div>
-							<b>Effort Value (EV) 💪:</b>
-							{data.pokemon_v2_pokemon[0].pokemon_v2_pokemonstats.map(
-								(stat: any, index: number) => {
-									return stat.effort > 0 ? (
-										<span key={index}>
-											{" "}
-											{stat.pokemon_v2_stat.name}: {stat.effort} /
-										</span>
-									) : null;
-								}
-							)}
-						</div>
-					</div>
+					<Profile
+						weight={data.pokemon_v2_pokemon[0].weight}
+						height={data.pokemon_v2_pokemon[0].height}
+						capture_rate={
+							data.pokemon_v2_pokemon[0].pokemon_v2_pokemonspecy.capture_rate
+						}
+						gender_ratio={
+							data.pokemon_v2_pokemon[0].pokemon_v2_pokemonspecy.gender_rate
+						}
+						egg_groups={
+							data.pokemon_v2_pokemon[0].pokemon_v2_pokemonspecy
+								.pokemon_v2_pokemonegggroups
+						}
+						hatch_counter={
+							data.pokemon_v2_pokemon[0].pokemon_v2_pokemonspecy.hatch_counter
+						}
+						abilities={data.pokemon_v2_pokemon[0].pokemon_v2_pokemonabilities}
+						stats={data.pokemon_v2_pokemon[0].pokemon_v2_pokemonstats}
+					/>
 				</Card.Body>
 			</Card>
 		</div>
