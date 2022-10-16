@@ -3,6 +3,7 @@ import styles from "./Pokemon.module.scss";
 import Card from "../Card/Card";
 import Pill from "../Pill/Pill";
 import ProgressBar from "../ProgressBar/ProgressBar";
+import Stats from "./Modules/Stats/Stats";
 
 const QUERY = gql`
 	query Pokemon_v2_pokemon($where: pokemon_v2_pokemon_bool_exp) {
@@ -116,23 +117,13 @@ export default function Pokemon({ identifier }: { identifier: number | null }) {
 					</div>
 				</Card.Header>
 				<Card.Body className='px-2'>
-					<h2>Stats</h2>
-					{data.pokemon_v2_pokemon[0].pokemon_v2_pokemonstats.map(
-						(stat: any, index: number) => {
-							return (
-								<ProgressBar
-									key={index}
-									label={stat.pokemon_v2_stat.name}
-									value={stat.base_stat}
-									maxValue={255}
-									className={
-										data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[0]
-											.pokemon_v2_type.name
-									}
-								/>
-							);
+					<Stats
+						stats={data.pokemon_v2_pokemon[0].pokemon_v2_pokemonstats}
+						type={
+							data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[0]
+								.pokemon_v2_type.name
 						}
-					)}
+					/>
 					<hr className='mt-3' />
 					<h2>Profile</h2>
 					<div>
