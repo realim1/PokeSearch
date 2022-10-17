@@ -4,6 +4,7 @@ import Card from "../Card/Card";
 import Pill from "../Pill/Pill";
 import Stats from "./Modules/Stats/Stats";
 import Profile from "./Modules/Profile/Profile";
+import TypeDef from "./Modules/TypeDef/TypeDef";
 
 const QUERY = gql`
 	query Pokemon_v2_pokemon($where: pokemon_v2_pokemon_bool_exp) {
@@ -12,6 +13,12 @@ const QUERY = gql`
 			pokemon_v2_pokemontypes {
 				pokemon_v2_type {
 					name
+					pokemonV2TypeefficaciesByTargetTypeId {
+						pokemon_v2_type {
+							name
+						}
+						damage_factor
+					}
 				}
 			}
 			pokemon_v2_pokemonsprites {
@@ -79,6 +86,36 @@ export default function Pokemon({ identifier }: { identifier: number | null }) {
 	const sprites = JSON.parse(
 		data.pokemon_v2_pokemon[0].pokemon_v2_pokemonsprites[0].sprites
 	);
+
+	/*TODO: Add logic for calculating dual type weaknesses. For example a Flying and Normal type Pokemon (like Swablu) should only have a single damage multipler and not a double. */
+	const receivesDoubleDamage = () => {
+		let doubleDamageTypes =
+			data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[0].pokemon_v2_type.pokemonV2TypeefficaciesByTargetTypeId.filter(
+				(typeEffect: { damage_factor: number }) =>
+					typeEffect.damage_factor == 200
+			);
+		if (data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes.length > 1) {
+			const doubleDamageTypes2 =
+				data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[1].pokemon_v2_type.pokemonV2TypeefficaciesByTargetTypeId.filter(
+					(typeEffect: { damage_factor: number }) =>
+						typeEffect.damage_factor == 200
+				);
+			doubleDamageTypes = [...doubleDamageTypes, ...doubleDamageTypes2];
+		}
+		return doubleDamageTypes;
+	};
+
+	const receivesHalfDamage = () => {
+		return data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[0].pokemon_v2_type.pokemonV2TypeefficaciesByTargetTypeId.filter(
+			(typeEffect: { damage_factor: number }) => typeEffect.damage_factor == 50
+		);
+	};
+
+	const receivesNoDamage = () => {
+		return data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[0].pokemon_v2_type.pokemonV2TypeefficaciesByTargetTypeId.filter(
+			(typeEffect: { damage_factor: number }) => typeEffect.damage_factor == 0
+		);
+	};
 	return (
 		<div className={styles["Pokemon"]}>
 			<Card>
@@ -143,6 +180,12 @@ export default function Pokemon({ identifier }: { identifier: number | null }) {
 						}
 						abilities={data.pokemon_v2_pokemon[0].pokemon_v2_pokemonabilities}
 						stats={data.pokemon_v2_pokemon[0].pokemon_v2_pokemonstats}
+					/>
+					<hr className='mt-3' />
+					<TypeDef
+						doubleDamage={receivesDoubleDamage()}
+						halfDamage={receivesHalfDamage()}
+						noDamage={receivesNoDamage()}
 					/>
 				</Card.Body>
 			</Card>
