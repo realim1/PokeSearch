@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useQuery, gql } from "@apollo/client";
 import styles from "./Pokemon.module.scss";
 import Card from "../Card/Card";
@@ -57,6 +58,10 @@ const QUERY = gql`
 `;
 
 export default function Pokemon({ identifier }: { identifier: number | null }) {
+	const [doubleDmg, setDoubleDmg] = useState<any[]>([]);
+	const [halfDmg, setHalfDmg] = useState<any[]>([]);
+	const [noDmg, setNoDmg] = useState<any[]>([]);
+
 	const { data, loading, error } = useQuery(QUERY, {
 		variables: {
 			where: {
@@ -66,6 +71,113 @@ export default function Pokemon({ identifier }: { identifier: number | null }) {
 			},
 		},
 	});
+
+	useEffect(() => {
+		if (!loading) {
+			receivesDoubleDamage();
+			receivesHalfDamage();
+			receivesNoDamage();
+		}
+	}, [loading]);
+
+	useEffect(() => {
+		for (let i = halfDmg.length - 1; i >= 0; i--) {
+			let type = halfDmg[i].pokemon_v2_type.name;
+			const index = doubleDmg.findIndex((item) => {
+				return item.pokemon_v2_type.name == type;
+			});
+			if (index >= 0) {
+				halfDmg.splice(i, 1);
+				setHalfDmg([...halfDmg]);
+				if (index > -1) {
+					doubleDmg.splice(index, 1);
+					setDoubleDmg([...doubleDmg]);
+				}
+			}
+		}
+	}, [doubleDmg, halfDmg]);
+
+	const getDamageMultiplers = (types: any[], multipler: number) => {
+		let damageTypes = types.filter(
+			(typeEffect: { damage_factor: number }) =>
+				typeEffect.damage_factor == multipler
+		);
+		return damageTypes;
+	};
+
+	const receivesDoubleDamage = () => {
+		if (data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes.length > 1) {
+			setDoubleDmg([
+				...getDamageMultiplers(
+					data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[0].pokemon_v2_type
+						.pokemonV2TypeefficaciesByTargetTypeId,
+					200
+				),
+				...getDamageMultiplers(
+					data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[1].pokemon_v2_type
+						.pokemonV2TypeefficaciesByTargetTypeId,
+					200
+				),
+			]);
+		} else {
+			setDoubleDmg([
+				...getDamageMultiplers(
+					data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[0].pokemon_v2_type
+						.pokemonV2TypeefficaciesByTargetTypeId,
+					200
+				),
+			]);
+		}
+	};
+	const receivesHalfDamage = () => {
+		if (data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes.length > 1) {
+			setHalfDmg([
+				...getDamageMultiplers(
+					data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[0].pokemon_v2_type
+						.pokemonV2TypeefficaciesByTargetTypeId,
+					50
+				),
+				...getDamageMultiplers(
+					data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[1].pokemon_v2_type
+						.pokemonV2TypeefficaciesByTargetTypeId,
+					50
+				),
+			]);
+		} else {
+			setHalfDmg([
+				...getDamageMultiplers(
+					data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[0].pokemon_v2_type
+						.pokemonV2TypeefficaciesByTargetTypeId,
+					50
+				),
+			]);
+		}
+	};
+
+	const receivesNoDamage = () => {
+		if (data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes.length > 1) {
+			setNoDmg([
+				...getDamageMultiplers(
+					data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[0].pokemon_v2_type
+						.pokemonV2TypeefficaciesByTargetTypeId,
+					0
+				),
+				...getDamageMultiplers(
+					data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[1].pokemon_v2_type
+						.pokemonV2TypeefficaciesByTargetTypeId,
+					0
+				),
+			]);
+		} else {
+			setNoDmg([
+				...getDamageMultiplers(
+					data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[0].pokemon_v2_type
+						.pokemonV2TypeefficaciesByTargetTypeId,
+					0
+				),
+			]);
+		}
+	};
 
 	if (loading) {
 		return (
@@ -81,41 +193,12 @@ export default function Pokemon({ identifier }: { identifier: number | null }) {
 		console.error(error);
 		return null;
 	}
-	console.log(data);
+	/*TODO: Add logic for calculating dual type weaknesses. For example a Flying and Normal type Pokemon (like Swablu) should only have a single damage multipler and not a double. */
 
 	const sprites = JSON.parse(
 		data.pokemon_v2_pokemon[0].pokemon_v2_pokemonsprites[0].sprites
 	);
 
-	/*TODO: Add logic for calculating dual type weaknesses. For example a Flying and Normal type Pokemon (like Swablu) should only have a single damage multipler and not a double. */
-	const receivesDoubleDamage = () => {
-		let doubleDamageTypes =
-			data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[0].pokemon_v2_type.pokemonV2TypeefficaciesByTargetTypeId.filter(
-				(typeEffect: { damage_factor: number }) =>
-					typeEffect.damage_factor == 200
-			);
-		if (data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes.length > 1) {
-			const doubleDamageTypes2 =
-				data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[1].pokemon_v2_type.pokemonV2TypeefficaciesByTargetTypeId.filter(
-					(typeEffect: { damage_factor: number }) =>
-						typeEffect.damage_factor == 200
-				);
-			doubleDamageTypes = [...doubleDamageTypes, ...doubleDamageTypes2];
-		}
-		return doubleDamageTypes;
-	};
-
-	const receivesHalfDamage = () => {
-		return data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[0].pokemon_v2_type.pokemonV2TypeefficaciesByTargetTypeId.filter(
-			(typeEffect: { damage_factor: number }) => typeEffect.damage_factor == 50
-		);
-	};
-
-	const receivesNoDamage = () => {
-		return data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[0].pokemon_v2_type.pokemonV2TypeefficaciesByTargetTypeId.filter(
-			(typeEffect: { damage_factor: number }) => typeEffect.damage_factor == 0
-		);
-	};
 	return (
 		<div className={styles["Pokemon"]}>
 			<Card>
@@ -183,9 +266,9 @@ export default function Pokemon({ identifier }: { identifier: number | null }) {
 					/>
 					<hr className='mt-3' />
 					<TypeDef
-						doubleDamage={receivesDoubleDamage()}
-						halfDamage={receivesHalfDamage()}
-						noDamage={receivesNoDamage()}
+						doubleDamage={doubleDmg}
+						halfDamage={halfDmg}
+						noDamage={noDmg}
 					/>
 				</Card.Body>
 			</Card>
