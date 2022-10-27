@@ -58,8 +58,10 @@ const QUERY = gql`
 `;
 
 export default function Pokemon({ identifier }: { identifier: number | null }) {
+	const [quadDmg, setQuadDmg] = useState<any[]>([]);
 	const [doubleDmg, setDoubleDmg] = useState<any[]>([]);
 	const [halfDmg, setHalfDmg] = useState<any[]>([]);
+	const [quarterDmg, setQuarterDmg] = useState<any[]>([]);
 	const [noDmg, setNoDmg] = useState<any[]>([]);
 
 	const { data, loading, error } = useQuery(QUERY, {
@@ -81,21 +83,9 @@ export default function Pokemon({ identifier }: { identifier: number | null }) {
 	}, [loading]);
 
 	useEffect(() => {
-		for (let i = halfDmg.length - 1; i >= 0; i--) {
-			let type = halfDmg[i].pokemon_v2_type.name;
-			const index = doubleDmg.findIndex((item) => {
-				return item.pokemon_v2_type.name == type;
-			});
-			if (index >= 0) {
-				halfDmg.splice(i, 1);
-				setHalfDmg([...halfDmg]);
-				if (index > -1) {
-					doubleDmg.splice(index, 1);
-					setDoubleDmg([...doubleDmg]);
-				}
-			}
-		}
-	}, [doubleDmg, halfDmg]);
+		checkSingleDamage();
+		checkNoDamage();
+	}, [quadDmg, doubleDmg, halfDmg, quarterDmg, noDmg]);
 
 	const getDamageMultiplers = (types: any[], multipler: number) => {
 		let damageTypes = types.filter(
@@ -107,18 +97,36 @@ export default function Pokemon({ identifier }: { identifier: number | null }) {
 
 	const receivesDoubleDamage = () => {
 		if (data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes.length > 1) {
-			setDoubleDmg([
-				...getDamageMultiplers(
-					data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[0].pokemon_v2_type
-						.pokemonV2TypeefficaciesByTargetTypeId,
-					200
-				),
-				...getDamageMultiplers(
-					data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[1].pokemon_v2_type
-						.pokemonV2TypeefficaciesByTargetTypeId,
-					200
-				),
-			]);
+			const mainTypeDefense = getDamageMultiplers(
+				data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[0].pokemon_v2_type
+					.pokemonV2TypeefficaciesByTargetTypeId,
+				200
+			);
+
+			const secondaryTypeDefense = getDamageMultiplers(
+				data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[1].pokemon_v2_type
+					.pokemonV2TypeefficaciesByTargetTypeId,
+				200
+			);
+
+			const newDoubleDmg = [];
+			const newQuadDmg = [];
+			for (let i = 0; i < secondaryTypeDefense.length; i++) {
+				const isQuadDamage = mainTypeDefense.findIndex((type) => {
+					return (
+						type.pokemon_v2_type.name ===
+						secondaryTypeDefense[i].pokemon_v2_type.name
+					);
+				});
+				if (isQuadDamage >= 0) {
+					mainTypeDefense.splice(isQuadDamage, 1);
+					newQuadDmg.push(secondaryTypeDefense[i]);
+				} else {
+					newDoubleDmg.push(secondaryTypeDefense[i]);
+				}
+			}
+			setQuadDmg([...newQuadDmg]);
+			setDoubleDmg([...mainTypeDefense, ...newDoubleDmg]);
 		} else {
 			setDoubleDmg([
 				...getDamageMultiplers(
@@ -131,18 +139,36 @@ export default function Pokemon({ identifier }: { identifier: number | null }) {
 	};
 	const receivesHalfDamage = () => {
 		if (data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes.length > 1) {
-			setHalfDmg([
-				...getDamageMultiplers(
-					data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[0].pokemon_v2_type
-						.pokemonV2TypeefficaciesByTargetTypeId,
-					50
-				),
-				...getDamageMultiplers(
-					data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[1].pokemon_v2_type
-						.pokemonV2TypeefficaciesByTargetTypeId,
-					50
-				),
-			]);
+			const mainTypeDefense = getDamageMultiplers(
+				data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[0].pokemon_v2_type
+					.pokemonV2TypeefficaciesByTargetTypeId,
+				50
+			);
+
+			const secondaryTypeDefense = getDamageMultiplers(
+				data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[1].pokemon_v2_type
+					.pokemonV2TypeefficaciesByTargetTypeId,
+				50
+			);
+
+			const newHalfDmg = [];
+			const newQuarterDmg = [];
+			for (let i = 0; i < secondaryTypeDefense.length; i++) {
+				const isQuarterDamage = mainTypeDefense.findIndex((type) => {
+					return (
+						type.pokemon_v2_type.name ===
+						secondaryTypeDefense[i].pokemon_v2_type.name
+					);
+				});
+				if (isQuarterDamage >= 0) {
+					mainTypeDefense.splice(isQuarterDamage, 1);
+					newQuarterDmg.push(secondaryTypeDefense[i]);
+				} else {
+					newHalfDmg.push(secondaryTypeDefense[i]);
+				}
+			}
+			setQuarterDmg([...newQuarterDmg]);
+			setHalfDmg([...mainTypeDefense, ...newHalfDmg]);
 		} else {
 			setHalfDmg([
 				...getDamageMultiplers(
@@ -176,6 +202,73 @@ export default function Pokemon({ identifier }: { identifier: number | null }) {
 					0
 				),
 			]);
+		}
+	};
+
+	const checkSingleDamage = () => {
+		for (let i = halfDmg.length - 1; i >= 0; i--) {
+			let type = halfDmg[i].pokemon_v2_type.name;
+			const index = doubleDmg.findIndex((item) => {
+				return item.pokemon_v2_type.name == type;
+			});
+			if (index >= 0) {
+				halfDmg.splice(i, 1);
+				setHalfDmg([...halfDmg]);
+				if (index > -1) {
+					doubleDmg.splice(index, 1);
+					setDoubleDmg([...doubleDmg]);
+				}
+			}
+		}
+	};
+
+	const checkNoDamage = () => {
+		for (let i = noDmg.length - 1; i >= 0; i--) {
+			let type = noDmg[i].pokemon_v2_type.name;
+
+			const quadIndex = quadDmg.findIndex((item) => {
+				return item.pokemon_v2_type.name == type;
+			});
+			if (quadIndex >= 0) {
+				quadDmg.splice(i, 1);
+				if (quadIndex > -1) {
+					quadDmg.splice(quadIndex, 1);
+					setQuadDmg([...quadDmg]);
+				}
+			}
+
+			const doubleIndex = doubleDmg.findIndex((item) => {
+				return item.pokemon_v2_type.name == type;
+			});
+			if (doubleIndex >= 0) {
+				doubleDmg.splice(i, 1);
+				if (doubleIndex > -1) {
+					doubleDmg.splice(doubleIndex, 1);
+					setDoubleDmg([...doubleDmg]);
+				}
+			}
+
+			const quarterIndex = quarterDmg.findIndex((item) => {
+				return item.pokemon_v2_type.name == type;
+			});
+			if (quarterIndex >= 0) {
+				quarterDmg.splice(i, 1);
+				if (quarterIndex > -1) {
+					quarterDmg.splice(quarterIndex, 1);
+					setQuarterDmg([...quarterDmg]);
+				}
+			}
+
+			const halfIndex = halfDmg.findIndex((item) => {
+				return item.pokemon_v2_type.name == type;
+			});
+			if (halfIndex >= 0) {
+				halfDmg.splice(i, 1);
+				if (halfIndex > -1) {
+					halfDmg.splice(halfIndex, 1);
+					setHalfDmg([...halfDmg]);
+				}
+			}
 		}
 	};
 
@@ -266,8 +359,10 @@ export default function Pokemon({ identifier }: { identifier: number | null }) {
 					/>
 					<hr className='mt-3' />
 					<TypeDef
+						quadDamage={quadDmg}
 						doubleDamage={doubleDmg}
 						halfDamage={halfDmg}
+						quarterDamage={quarterDmg}
 						noDamage={noDmg}
 					/>
 				</Card.Body>

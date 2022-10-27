@@ -7,47 +7,81 @@ interface TypeDefProps {
 	doubleDamage?: any[];
 	quadDamage?: any[];
 	halfDamage?: any[];
+	quarterDamage?: any[];
 	noDamage?: any[];
 }
 
 const TypeDef = ({
+	quadDamage = [],
 	doubleDamage = [],
 	halfDamage = [],
+	quarterDamage = [],
 	noDamage = [],
 }: TypeDefProps) => {
 	return (
 		<div>
 			<h2>Type Defense</h2>
-			{doubleDamage.map((damageType, index) => {
-				return (
-					<Pill
-						key={index}
-						className={`${style["TypeDef__pill"]} mb-1 ${damageType.pokemon_v2_type.name}`}>
-						<div>{damageType.pokemon_v2_type.name}</div>
-						<div>x2</div>
-					</Pill>
-				);
-			})}
-			{halfDamage.map((damageType, index) => {
-				return (
-					<Pill
-						key={index}
-						className={`${style["TypeDef__pill"]} mb-1 ${damageType.pokemon_v2_type.name}`}>
-						<div>{damageType.pokemon_v2_type.name}</div>
-						<div>x0.5</div>
-					</Pill>
-				);
-			})}
-			{noDamage.map((damageType, index) => {
-				return (
-					<Pill
-						key={index}
-						className={`${style["TypeDef__pill"]} mb-1 ${damageType.pokemon_v2_type.name}`}>
-						<div>{damageType.pokemon_v2_type.name}</div>
-						<div>x0</div>
-					</Pill>
-				);
-			})}
+			<div className='my-3'>
+				{quadDamage.map((damageType, index) => {
+					return (
+						<Pill
+							key={index}
+							className={`${style["TypeDef__pill"]} mb-1 ${damageType.pokemon_v2_type.name}`}>
+							<div>{damageType.pokemon_v2_type.name}</div>
+							<div>x4</div>
+						</Pill>
+					);
+				})}
+			</div>
+
+			<div className='my-3'>
+				{doubleDamage.map((damageType, index) => {
+					return (
+						<Pill
+							key={index}
+							className={`${style["TypeDef__pill"]} mb-1 ${damageType.pokemon_v2_type.name}`}>
+							<div>{damageType.pokemon_v2_type.name}</div>
+							<div>x2</div>
+						</Pill>
+					);
+				})}
+			</div>
+			<div className='my-3'>
+				{halfDamage.map((damageType, index) => {
+					return (
+						<Pill
+							key={index}
+							className={`${style["TypeDef__pill"]} mb-1 ${damageType.pokemon_v2_type.name}`}>
+							<div>{damageType.pokemon_v2_type.name}</div>
+							<div>x0.5</div>
+						</Pill>
+					);
+				})}
+			</div>
+			<div className='my-3'>
+				{quarterDamage.map((damageType, index) => {
+					return (
+						<Pill
+							key={index}
+							className={`${style["TypeDef__pill"]} mb-1 ${damageType.pokemon_v2_type.name}`}>
+							<div>{damageType.pokemon_v2_type.name}</div>
+							<div>x0.25</div>
+						</Pill>
+					);
+				})}
+			</div>
+			<div className='my-3'>
+				{noDamage.map((damageType, index) => {
+					return (
+						<Pill
+							key={index}
+							className={`${style["TypeDef__pill"]} mb-1 ${damageType.pokemon_v2_type.name}`}>
+							<div>{damageType.pokemon_v2_type.name}</div>
+							<div>x0</div>
+						</Pill>
+					);
+				})}
+			</div>
 		</div>
 	);
 };
