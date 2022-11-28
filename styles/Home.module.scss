@@ -1,4 +1,4 @@
-$pokeball-red: #dc3545;
+@import "../assets/styles/colors";
 
 .container {
 	padding: 0 2rem;
@@ -36,15 +36,6 @@ $pokeball-red: #dc3545;
 	border-radius: 0.5rem;
 	height: 2rem;
 	background-color: $pokeball-red;
-}
-
-.footer {
-	display: flex;
-	flex: 1;
-	padding: 2rem 0;
-	border-top: 1px solid #eaeaea;
-	justify-content: center;
-	align-items: center;
 }
 
 .title {
