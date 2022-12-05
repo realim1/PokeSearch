@@ -6,6 +6,7 @@ import Pill from "../Pill/Pill";
 import Stats from "./Modules/Stats/Stats";
 import Profile from "./Modules/Profile/Profile";
 import TypeDef from "./Modules/TypeDef/TypeDef";
+import EvoChart from "./Modules/EvoChart/EvoChart";
 
 const QUERY = gql`
 	query Pokemon_v2_pokemon($where: pokemon_v2_pokemon_bool_exp) {
@@ -281,7 +282,6 @@ export default function Pokemon({ identifier }: { identifier: number | null }) {
 			</div>
 		);
 	}
-
 	if (error) {
 		console.error(error);
 		return null;
@@ -364,6 +364,13 @@ export default function Pokemon({ identifier }: { identifier: number | null }) {
 						halfDamage={halfDmg}
 						quarterDamage={quarterDmg}
 						noDamage={noDmg}
+					/>
+					<hr className='mt-3' />
+					<EvoChart
+						evolutions={
+							data.pokemon_v2_pokemon[0].pokemon_v2_pokemonspecy
+								.pokemon_v2_evolutionchain
+						}
 					/>
 				</Card.Body>
 			</Card>
