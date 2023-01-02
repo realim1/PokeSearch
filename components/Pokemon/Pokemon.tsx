@@ -58,22 +58,40 @@ const QUERY = gql`
 	}
 `;
 
-export default function Pokemon({ identifier }: { identifier: number | null }) {
+export default function Pokemon({
+	id,
+	name,
+}: {
+	id: number;
+	name: string | string[];
+}) {
 	const [quadDmg, setQuadDmg] = useState<any[]>([]);
 	const [doubleDmg, setDoubleDmg] = useState<any[]>([]);
 	const [halfDmg, setHalfDmg] = useState<any[]>([]);
 	const [quarterDmg, setQuarterDmg] = useState<any[]>([]);
 	const [noDmg, setNoDmg] = useState<any[]>([]);
 
-	const { data, loading, error } = useQuery(QUERY, {
-		variables: {
-			where: {
-				id: {
-					_eq: identifier,
+	const option = !isNaN(id)
+		? {
+				variables: {
+					where: {
+						id: {
+							_eq: id,
+						},
+					},
 				},
-			},
-		},
-	});
+		  }
+		: {
+				variables: {
+					where: {
+						name: {
+							_eq: name,
+						},
+					},
+				},
+		  };
+
+	const { data, loading, error } = useQuery(QUERY, option);
 
 	useEffect(() => {
 		if (!loading) {
@@ -316,7 +334,7 @@ export default function Pokemon({ identifier }: { identifier: number | null }) {
 					<h1 className={`text-capitalize mt-2 mb-1`}>
 						{data.pokemon_v2_pokemon[0].name}
 					</h1>
-					<span>#{identifier}</span>
+					<span>#{id}</span>
 					<div className={styles["Pokemon__types"]}>
 						{data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes.map(
 							(type: any, key: any) => {

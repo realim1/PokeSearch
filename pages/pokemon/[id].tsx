@@ -6,12 +6,11 @@ import Pokemon from "../../components/Pokemon/Pokemon";
 const Index: NextPage = () => {
 	const router = useRouter();
 	const { id } = router.query;
-	const identifier = id ? +id : null;
-
+	let idNum: number = typeof id === "string" ? parseInt(id) : NaN;
 	return (
 		<div>
 			<ClientOnly>
-				<Pokemon identifier={identifier} />
+				<Pokemon id={idNum} name={id} />
 			</ClientOnly>
 		</div>
 	);
