@@ -12,6 +12,7 @@ const QUERY = gql`
 	query Pokemon_v2_pokemon($where: pokemon_v2_pokemon_bool_exp) {
 		pokemon_v2_pokemon(where: $where) {
 			name
+			id
 			pokemon_v2_pokemontypes {
 				pokemon_v2_type {
 					name
@@ -63,7 +64,7 @@ export default function Pokemon({
 	name,
 }: {
 	id: number;
-	name: string | string[];
+	name: string | string[] | undefined;
 }) {
 	const [quadDmg, setQuadDmg] = useState<any[]>([]);
 	const [doubleDmg, setDoubleDmg] = useState<any[]>([]);
@@ -71,27 +72,23 @@ export default function Pokemon({
 	const [quarterDmg, setQuarterDmg] = useState<any[]>([]);
 	const [noDmg, setNoDmg] = useState<any[]>([]);
 
-	const option = !isNaN(id)
+	const where = !isNaN(id)
 		? {
-				variables: {
-					where: {
-						id: {
-							_eq: id,
-						},
-					},
+				id: {
+					_eq: id,
 				},
 		  }
 		: {
-				variables: {
-					where: {
-						name: {
-							_eq: name,
-						},
-					},
+				name: {
+					_eq: name,
 				},
 		  };
 
-	const { data, loading, error } = useQuery(QUERY, option);
+	const { data, loading, error } = useQuery(QUERY, {
+		variables: {
+			where: where,
+		},
+	});
 
 	useEffect(() => {
 		if (!loading) {
@@ -334,7 +331,7 @@ export default function Pokemon({
 					<h1 className={`text-capitalize mt-2 mb-1`}>
 						{data.pokemon_v2_pokemon[0].name}
 					</h1>
-					<span>#{id}</span>
+					<span>#{data.pokemon_v2_pokemon[0].id}</span>
 					<div className={styles["Pokemon__types"]}>
 						{data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes.map(
 							(type: any, key: any) => {
