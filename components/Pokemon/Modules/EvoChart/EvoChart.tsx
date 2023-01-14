@@ -27,7 +27,6 @@ const EvoChart = ({ evolutions }: EvoChartProps) => {
 		return await fetch(path)
 			.then((res) => res.json())
 			.then((data) => {
-				console.log(data);
 				return data;
 			});
 	};

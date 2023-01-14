@@ -71,7 +71,6 @@ export default function Pokemon({
 	const [halfDmg, setHalfDmg] = useState<any[]>([]);
 	const [quarterDmg, setQuarterDmg] = useState<any[]>([]);
 	const [noDmg, setNoDmg] = useState<any[]>([]);
-
 	const where = !isNaN(id)
 		? {
 				id: {

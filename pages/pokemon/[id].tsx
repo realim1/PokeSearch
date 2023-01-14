@@ -6,11 +6,13 @@ import Pokemon from "../../components/Pokemon/Pokemon";
 const Index: NextPage = () => {
 	const router = useRouter();
 	const { id } = router.query;
-	let idNum: number = typeof id === "string" ? parseInt(id) : NaN;
+	const idNum: number = typeof id === "string" ? parseInt(id) : NaN;
+	let name: string = "";
+	name = isNaN(idNum) && typeof id === "string" ? id : "";
 	return (
 		<div>
 			<ClientOnly>
-				<Pokemon id={idNum} name={id} />
+				<Pokemon id={idNum} name={name.toLowerCase()} />
 			</ClientOnly>
 		</div>
 	);
