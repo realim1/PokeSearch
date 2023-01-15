@@ -7,6 +7,7 @@ import styles from "../styles/Home.module.scss";
 
 import PokeballImg from "../assets/images/Pokeball.png";
 import PokesearchTemplate from "../templates/PokesearchTemplate/PokesearchTemplate";
+import { removeSpecialChars } from "../utils/utils";
 
 const Home: NextPage = () => {
 	const router = useRouter();
@@ -30,7 +31,9 @@ const Home: NextPage = () => {
 					/>
 					<button
 						className={styles.pokemonButton}
-						onClick={() => router.push(`/pokemon/${pokemon}`)}>
+						onClick={() =>
+							router.push(`/pokemon/${removeSpecialChars(pokemon)}`)
+						}>
 						PokéSearch
 					</button>
 				</div>

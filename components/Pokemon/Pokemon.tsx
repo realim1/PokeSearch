@@ -64,7 +64,7 @@ export default function Pokemon({
 	name,
 }: {
 	id: number;
-	name: string | string[] | undefined;
+	name: string | undefined;
 }) {
 	const [quadDmg, setQuadDmg] = useState<any[]>([]);
 	const [doubleDmg, setDoubleDmg] = useState<any[]>([]);
