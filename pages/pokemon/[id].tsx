@@ -7,8 +7,7 @@ const Index: NextPage = () => {
 	const router = useRouter();
 	const { id } = router.query;
 	const idNum: number = typeof id === "string" ? parseInt(id) : NaN;
-	let name: string = "";
-	name = isNaN(idNum) && typeof id === "string" ? id : "";
+	const name: string = isNaN(idNum) && typeof id === "string" ? id : "";
 	return (
 		<div>
 			<ClientOnly>
