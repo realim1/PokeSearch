@@ -24,9 +24,6 @@ const QUERY = gql`
 					}
 				}
 			}
-			pokemon_v2_pokemonsprites {
-				sprites
-			}
 			pokemon_v2_pokemonstats {
 				base_stat
 				effort
@@ -300,17 +297,19 @@ export default function Pokemon({
 		console.error(error);
 		return null;
 	}
-	/*TODO: Add logic for calculating dual type weaknesses. For example a Flying and Normal type Pokemon (like Swablu) should only have a single damage multipler and not a double. */
 
-	const sprites = JSON.parse(
-		data.pokemon_v2_pokemon[0].pokemon_v2_pokemonsprites[0].sprites
-	);
+	/**
+	 * Since PokeApi GraphQL is a little inconsistent sometimes, I will be temporarily removing the sprites portion
+	 */
+	// const sprites = JSON.parse(
+	// 	data.pokemon_v2_pokemon[0].pokemon_v2_pokemonsprites[0].sprites
+	// );
 
 	return (
 		<div className={styles["Pokemon"]}>
 			<Card>
 				<Card.Img
-					src={sprites.front_default}
+					src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${data.pokemon_v2_pokemon[0].id}.png`}
 					alt={data.pokemon_v2_pokemon[0].name}
 					className={
 						data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[0]
