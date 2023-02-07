@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { removeSpecialChars } from "../../utils/utils";
 
 import ClientOnly from "../../components/ClientOnly/ClientOnly";
+import PokesearchTemplate from "../../templates/PokesearchTemplate/PokesearchTemplate";
 import Pokemon from "../../components/Pokemon/Pokemon";
 
 const Index: NextPage = () => {
@@ -14,11 +15,11 @@ const Index: NextPage = () => {
 		isNaN(idNum) && typeof id === "string" ? removeSpecialChars(id) : "";
 
 	return (
-		<div>
+		<PokesearchTemplate>
 			<ClientOnly>
 				<Pokemon id={idNum} name={name.toLowerCase()} />
 			</ClientOnly>
-		</div>
+		</PokesearchTemplate>
 	);
 };
 
