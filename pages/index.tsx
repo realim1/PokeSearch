@@ -34,7 +34,7 @@ const Home: NextPage = () => {
 						onClick={() =>
 							router.push(`/pokemon/${removeSpecialChars(pokemon)}`)
 						}>
-						PokéSearch
+						🔍
 					</button>
 				</div>
 			</main>
