@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
@@ -12,12 +12,17 @@ import { removeSpecialChars } from "../utils/utils";
 const Home: NextPage = () => {
 	const router = useRouter();
 	const [pokemon, setPokemon] = useState("");
+
+	const onSubmit = (e: FormEvent) => {
+		e.preventDefault();
+		router.push(`/pokemon/${removeSpecialChars(pokemon)}`);
+	};
 	return (
 		<PokesearchTemplate>
 			<main className={styles.main}>
 				<Image src={PokeballImg} alt='Pokeball Logo' width={144} height={144} />
 				<h1 className={styles.title}>PokéSearch</h1>
-				<div className={styles.pokemonContainer}>
+				<form className={styles.pokemonContainer} onSubmit={onSubmit}>
 					<input
 						type='text'
 						id='pokemon'
@@ -29,14 +34,8 @@ const Home: NextPage = () => {
 							setPokemon(e.target.value);
 						}}
 					/>
-					<button
-						className={styles.pokemonButton}
-						onClick={() =>
-							router.push(`/pokemon/${removeSpecialChars(pokemon)}`)
-						}>
-						🔍
-					</button>
-				</div>
+					<button className={styles.pokemonButton}>🔍</button>
+				</form>
 			</main>
 		</PokesearchTemplate>
 	);
