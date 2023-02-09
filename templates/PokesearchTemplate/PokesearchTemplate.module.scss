@@ -4,17 +4,9 @@
 	&__header {
 		display: flex;
 		justify-content: space-between;
-		background-color: $pokeball-red;
+		flex-direction: row-reverse;
+		background-color: $pokeball-black;
 		border-radius: 0 0 2px 2px;
-		border-bottom: 2px solid $pokeball-off-white;
 		padding: 1rem;
-	}
-	&__footer {
-		display: flex;
-		flex: 1;
-		padding: 2rem 0;
-		border-top: 1px solid #eaeaea;
-		justify-content: center;
-		align-items: center;
 	}
 }

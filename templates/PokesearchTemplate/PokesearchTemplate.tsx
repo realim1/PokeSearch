@@ -2,6 +2,7 @@ import React, { ReactNode, useState } from "react";
 import Head from "next/head";
 import styles from "./PokesearchTemplate.module.scss";
 import Image from "next/image";
+import Link from "next/link";
 
 import githubIcon from "../../assets/icons/github-icon-50.png";
 interface PokesearchTemplate {
@@ -18,22 +19,16 @@ const PokesearchTemplate = ({ children }: PokesearchTemplate) => {
 				<link rel='icon' href='/favicons/favicon.ico' />
 			</Head>
 			<header className={styles["PokesearchTemplate__header"]}>
-				<a
-					href='https://github.com/realim1/PokeSearch'
-					target='_blank'
-					rel='noreferrer'>
-					<Image src={githubIcon} width={25} height={25} alt='Github Logo' />
-				</a>
+				<nav>
+					<a
+						href='https://github.com/realim1/PokeSearch'
+						target='_blank'
+						rel='noreferrer'>
+						<Image src={githubIcon} width={25} height={25} alt='Github Logo' />
+					</a>
+				</nav>
 			</header>
 			{children}
-			<footer className={styles["PokesearchTemplate__footer"]}>
-				<a
-					href='https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app'
-					target='_blank'
-					rel='noopener noreferrer'>
-					Footer
-				</a>
-			</footer>
 		</div>
 	);
 };
