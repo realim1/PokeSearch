@@ -34,7 +34,11 @@ const Home: NextPage = () => {
 							setPokemon(e.target.value);
 						}}
 					/>
-					<button className={styles.pokemonButton}>🔍</button>
+					<button
+						disabled={pokemon ? false : true}
+						className={styles.pokemonButton}>
+						🔍
+					</button>
 				</form>
 			</main>
 		</PokesearchTemplate>

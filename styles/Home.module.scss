@@ -38,6 +38,13 @@
 	border-style: none;
 	height: 2rem;
 	background-color: $pokeball-red;
+	&:hover {
+		cursor: pointer;
+	}
+	&:disabled {
+		background-color: grey;
+		cursor: default;
+	}
 }
 
 .title {
