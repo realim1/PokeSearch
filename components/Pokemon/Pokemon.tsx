@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { useQuery, gql } from "@apollo/client";
 import styles from "./Pokemon.module.scss";
 import Card from "../Card/Card";
@@ -307,6 +308,12 @@ export default function Pokemon({
 
 	return (
 		<div className={styles["Pokemon"]}>
+			<Link
+				href='/'
+				legacyBehavior={false}
+				className={`${styles["Pokemon__back"]}`}>
+				◀️
+			</Link>
 			<Card>
 				<Card.Img
 					src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${data.pokemon_v2_pokemon[0].id}.png`}

@@ -22,6 +22,19 @@
 	@media (max-width: $sm) {
 		max-width: 540px;
 	}
+	&__back {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 2rem;
+		width: 2rem;
+		position: fixed;
+		left: 1rem;
+		bottom: 1rem;
+		background-color: grey;
+		border-style: none;
+		border-radius: 2rem;
+	}
 	&__preloader {
 		position: absolute;
 		top: 50%;
