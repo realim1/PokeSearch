@@ -69,6 +69,7 @@ export default function Pokemon({
 	const [halfDmg, setHalfDmg] = useState<any[]>([]);
 	const [quarterDmg, setQuarterDmg] = useState<any[]>([]);
 	const [noDmg, setNoDmg] = useState<any[]>([]);
+	const [selectedContent, setSelectedContent] = useState<String>("stats");
 	const where = !isNaN(id)
 		? {
 				id: {
@@ -307,7 +308,7 @@ export default function Pokemon({
 	// );
 
 	return (
-		<div className={styles["Pokemon"]}>
+		<div className={`${styles["Pokemon"]}`}>
 			<Link
 				href='/'
 				legacyBehavior={false}
@@ -348,50 +349,115 @@ export default function Pokemon({
 							}
 						)}
 					</div>
+					<nav className={`${styles["Pokemon__section_selector"]}`}>
+						<li>
+							<a
+								href='#/'
+								onClick={(e) => {
+									e.preventDefault();
+									setSelectedContent("stats");
+									return false;
+								}}
+								className={`${styles["Pokemon__selector_button"]} ${
+									selectedContent === "stats" ? `${styles["active"]}` : ""
+								}`}>
+								Stats
+							</a>
+						</li>
+						<li>
+							<a
+								href='#/'
+								onClick={(e) => {
+									e.preventDefault();
+									setSelectedContent("profile");
+									return false;
+								}}
+								className={`${styles["Pokemon__selector_button"]} ${
+									selectedContent === "profile" ? `${styles["active"]}` : ""
+								}`}>
+								Profile
+							</a>
+						</li>
+						<li>
+							<a
+								href='#/'
+								onClick={(e) => {
+									e.preventDefault();
+									setSelectedContent("type defense");
+									return false;
+								}}
+								className={`${styles["Pokemon__selector_button"]} ${
+									selectedContent === "type defense"
+										? `${styles["active"]}`
+										: ""
+								}`}>
+								Type Defense
+							</a>
+						</li>
+						<li>
+							<a
+								href='#/'
+								onClick={(e) => {
+									e.preventDefault();
+									setSelectedContent("evolutions");
+									return false;
+								}}
+								className={`${styles["Pokemon__selector_button"]} ${
+									selectedContent === "evolutions" ? `${styles["active"]}` : ""
+								}`}>
+								Evolutions
+							</a>
+						</li>
+					</nav>
 				</Card.Header>
-				<Card.Body className='px-2'>
-					<Stats
-						stats={data.pokemon_v2_pokemon[0].pokemon_v2_pokemonstats}
-						type={
-							data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[0]
-								.pokemon_v2_type.name
-						}
-					/>
-					<hr className='mt-3' />
-					<Profile
-						weight={data.pokemon_v2_pokemon[0].weight}
-						height={data.pokemon_v2_pokemon[0].height}
-						capture_rate={
-							data.pokemon_v2_pokemon[0].pokemon_v2_pokemonspecy.capture_rate
-						}
-						gender_ratio={
-							data.pokemon_v2_pokemon[0].pokemon_v2_pokemonspecy.gender_rate
-						}
-						egg_groups={
-							data.pokemon_v2_pokemon[0].pokemon_v2_pokemonspecy
-								.pokemon_v2_pokemonegggroups
-						}
-						hatch_counter={
-							data.pokemon_v2_pokemon[0].pokemon_v2_pokemonspecy.hatch_counter
-						}
-						abilities={data.pokemon_v2_pokemon[0].pokemon_v2_pokemonabilities}
-						stats={data.pokemon_v2_pokemon[0].pokemon_v2_pokemonstats}
-					/>
-					<hr className='mt-3' />
-					<TypeDef
-						quadDamage={quadDmg}
-						doubleDamage={doubleDmg}
-						halfDamage={halfDmg}
-						quarterDamage={quarterDmg}
-						noDamage={noDmg}
-					/>
-					<hr className='mt-3' />
-					<EvoChart
-						evolutions={
-							data.pokemon_v2_pokemon[0].pokemon_v2_pokemonspecy
-								.pokemon_v2_evolutionchain
-						}
-					/>
+				<Card.Body className='px-2 my-2'>
+					{selectedContent === "stats" && (
+						<Stats
+							stats={data.pokemon_v2_pokemon[0].pokemon_v2_pokemonstats}
+							type={
+								data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes[0]
+									.pokemon_v2_type.name
+							}
+						/>
+					)}
+					{selectedContent === "profile" && (
+						<Profile
+							weight={data.pokemon_v2_pokemon[0].weight}
+							height={data.pokemon_v2_pokemon[0].height}
+							capture_rate={
+								data.pokemon_v2_pokemon[0].pokemon_v2_pokemonspecy.capture_rate
+							}
+							gender_ratio={
+								data.pokemon_v2_pokemon[0].pokemon_v2_pokemonspecy.gender_rate
+							}
+							egg_groups={
+								data.pokemon_v2_pokemon[0].pokemon_v2_pokemonspecy
+									.pokemon_v2_pokemonegggroups
+							}
+							hatch_counter={
+								data.pokemon_v2_pokemon[0].pokemon_v2_pokemonspecy.hatch_counter
+							}
+							abilities={data.pokemon_v2_pokemon[0].pokemon_v2_pokemonabilities}
+							stats={data.pokemon_v2_pokemon[0].pokemon_v2_pokemonstats}
+						/>
+					)}
+					{selectedContent === "type defense" && (
+						<TypeDef
+							quadDamage={quadDmg}
+							doubleDamage={doubleDmg}
+							halfDamage={halfDmg}
+							quarterDamage={quarterDmg}
+							noDamage={noDmg}
+						/>
+					)}
+					{selectedContent === "evolutions" && (
+						<EvoChart
+							evolutions={
+								data.pokemon_v2_pokemon[0].pokemon_v2_pokemonspecy
+									.pokemon_v2_evolutionchain
+							}
+						/>
+					)}
 				</Card.Body>
 			</Card>
 		</div>
