@@ -342,7 +342,7 @@ export default function Pokemon({
 						{data.pokemon_v2_pokemon[0].pokemon_v2_pokemontypes.map(
 							(type: any, key: any) => {
 								return (
-									<Pill className={type.pokemon_v2_type.name} key={key}>
+									<Pill type={type.pokemon_v2_type.name} key={key}>
 										{type.pokemon_v2_type.name}
 									</Pill>
 								);

@@ -26,7 +26,8 @@ const TypeDef = ({
 					return (
 						<Pill
 							key={index}
-							className={`${style["TypeDef__pill"]} mb-1 ${damageType.pokemon_v2_type.name}`}>
+							type={damageType.pokemon_v2_type.name}
+							className={`${style["TypeDef__pill"]} mb-1`}>
 							<div>{damageType.pokemon_v2_type.name}</div>
 							<div>x4</div>
 						</Pill>
@@ -39,7 +40,8 @@ const TypeDef = ({
 					return (
 						<Pill
 							key={index}
-							className={`${style["TypeDef__pill"]} mb-1 ${damageType.pokemon_v2_type.name}`}>
+							type={damageType.pokemon_v2_type.name}
+							className={`${style["TypeDef__pill"]} mb-1`}>
 							<div>{damageType.pokemon_v2_type.name}</div>
 							<div>x2</div>
 						</Pill>
@@ -50,8 +52,9 @@ const TypeDef = ({
 				{halfDamage.map((damageType, index) => {
 					return (
 						<Pill
+							type={damageType.pokemon_v2_type.name}
 							key={index}
-							className={`${style["TypeDef__pill"]} mb-1 ${damageType.pokemon_v2_type.name}`}>
+							className={`${style["TypeDef__pill"]} mb-1`}>
 							<div>{damageType.pokemon_v2_type.name}</div>
 							<div>x0.5</div>
 						</Pill>
@@ -63,7 +66,8 @@ const TypeDef = ({
 					return (
 						<Pill
 							key={index}
-							className={`${style["TypeDef__pill"]} mb-1 ${damageType.pokemon_v2_type.name}`}>
+							type={damageType.pokemon_v2_type.name}
+							className={`${style["TypeDef__pill"]} mb-1`}>
 							<div>{damageType.pokemon_v2_type.name}</div>
 							<div>x0.25</div>
 						</Pill>
@@ -75,7 +79,8 @@ const TypeDef = ({
 					return (
 						<Pill
 							key={index}
-							className={`${style["TypeDef__pill"]} mb-1 ${damageType.pokemon_v2_type.name}`}>
+							type={damageType.pokemon_v2_type.name}
+							className={`${style["TypeDef__pill"]} mb-1`}>
 							<div>{damageType.pokemon_v2_type.name}</div>
 							<div>x0</div>
 						</Pill>
