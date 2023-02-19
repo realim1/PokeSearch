@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import styles from "./Pokemon.module.scss";
 import Card from "../Card/Card";
 import Pill from "../Pill/Pill";
@@ -8,54 +8,7 @@ import Stats from "./Modules/Stats/Stats";
 import Profile from "./Modules/Profile/Profile";
 import TypeDef from "./Modules/TypeDef/TypeDef";
 import EvoChart from "./Modules/EvoChart/EvoChart";
-
-const QUERY = gql`
-	query Pokemon_v2_pokemon($where: pokemon_v2_pokemon_bool_exp) {
-		pokemon_v2_pokemon(where: $where) {
-			name
-			id
-			pokemon_v2_pokemontypes {
-				pokemon_v2_type {
-					name
-					pokemonV2TypeefficaciesByTargetTypeId {
-						pokemon_v2_type {
-							name
-						}
-						damage_factor
-					}
-				}
-			}
-			pokemon_v2_pokemonstats {
-				base_stat
-				effort
-				pokemon_v2_stat {
-					name
-				}
-			}
-			weight
-			height
-			base_experience
-			pokemon_v2_pokemonspecy {
-				gender_rate
-				capture_rate
-				hatch_counter
-				pokemon_v2_evolutionchain {
-					id
-				}
-				pokemon_v2_pokemonegggroups {
-					pokemon_v2_egggroup {
-						name
-					}
-				}
-			}
-			pokemon_v2_pokemonabilities {
-				pokemon_v2_ability {
-					name
-				}
-			}
-		}
-	}
-`;
+import { GET_POKEMON_DATA } from "../../utils/queries";
 
 export default function Pokemon({
 	id,
@@ -82,7 +35,7 @@ export default function Pokemon({
 				},
 		  };
 
-	const { data, loading, error } = useQuery(QUERY, {
+	const { data, loading, error } = useQuery(GET_POKEMON_DATA, {
 		variables: {
 			where: where,
 		},
