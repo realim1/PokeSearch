@@ -1,5 +1,14 @@
 import { gql } from "@apollo/client";
 
+export const GET_POKEMON_GUESS = gql`
+	query Pokemon_v2_pokemon($where: pokemon_v2_pokemon_bool_exp) {
+		pokemon_v2_pokemon(where: $where) {
+			name
+			id
+		}
+	}
+`;
+
 export const GET_POKEMON_DATA = gql`
 	query Pokemon_v2_pokemon($where: pokemon_v2_pokemon_bool_exp) {
 		pokemon_v2_pokemon(where: $where) {
