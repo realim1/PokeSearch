@@ -2,22 +2,35 @@ import React, { ReactNode } from "react";
 import Image from "next/image";
 import styles from "./Pill.module.scss";
 
-const icons = require.context("../../assets/icons/types", false, /.svg$/);
+import * as types from "../../assets/icons/types/types";
 interface PillProps {
 	children: ReactNode;
-	type: string;
+	type?:
+		| "bug"
+		| "dark"
+		| "dragon"
+		| "electric"
+		| "fairy"
+		| "fighting"
+		| "fire"
+		| "flying"
+		| "ghost"
+		| "grass"
+		| "ground"
+		| "ice"
+		| "normal"
+		| "poison"
+		| "psychic"
+		| "rock"
+		| "steel"
+		| "water";
 	className?: string;
 }
 
 const Pill = ({ children, type, className = "" }: PillProps) => {
 	return (
 		<span className={`${styles["Pill"]} ${type} ${className}`}>
-			<Image
-				src={icons(`./${type}.svg`).default}
-				width='16'
-				height='16'
-				alt='bug'
-			/>
+			{type && <Image src={types[type].src} width='16' height='16' alt='bug' />}
 			{children}
 		</span>
 	);
