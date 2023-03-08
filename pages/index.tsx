@@ -8,6 +8,7 @@ import styles from "../styles/Home.module.scss";
 import PokeballImg from "../assets/images/Pokeball.png";
 import PokesearchTemplate from "../templates/PokesearchTemplate/PokesearchTemplate";
 import { removeSpecialChars } from "../utils/utils";
+import Link from "next/link";
 
 const Home: NextPage = () => {
 	const router = useRouter();
@@ -40,6 +41,12 @@ const Home: NextPage = () => {
 						🔍
 					</button>
 				</form>
+				<Link
+					className={styles.link}
+					legacyBehavior={false}
+					href={"/whos-that-pokemon"}>
+					Try to Guess That Pokémon
+				</Link>
 			</main>
 		</PokesearchTemplate>
 	);

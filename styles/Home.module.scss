@@ -19,6 +19,7 @@
 	width: 100%;
 	display: flex;
 	max-width: 35rem;
+	margin-bottom: 1.5rem;
 }
 
 .pokemonInput {
@@ -54,5 +55,16 @@
 	text-align: center;
 	@media (max-width: $md) {
 		font-size: 3rem;
+	}
+}
+
+.link {
+	padding: 0.75rem;
+	border: 2px solid $pokeball-white;
+	border-radius: 5rem;
+	&:hover {
+		background-color: white;
+		color: black;
+		transition-duration: 400ms;
 	}
 }
