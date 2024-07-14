@@ -1,3 +1,4 @@
+"use client";
 import type { NextPage } from "next";
 import { useQuery } from "@apollo/client";
 import { GET_POKEMON_GUESS } from "../../utils/queries";
