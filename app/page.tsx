@@ -1,16 +1,15 @@
-import React, { FormEvent, useState } from "react";
+"use client";
 
-import type { NextPage } from "next";
-import { useRouter } from "next/router";
+import { FormEvent, useState } from "react";
+
 import Image from "next/image";
-import styles from "../styles/Home.module.scss";
-
-import PokeballImg from "../assets/images/Pokeball.png";
 import PokesearchTemplate from "../templates/PokesearchTemplate/PokesearchTemplate";
+import PokeballImg from "../assets/images/Pokeball.png";
+import styles from "../styles/Home.module.scss";
+import { useRouter } from "next/navigation";
 import { removeSpecialChars } from "../utils/utils";
-import Link from "next/link";
 
-const Home: NextPage = () => {
+export default function Page() {
 	const router = useRouter();
 	const [pokemon, setPokemon] = useState("");
 
@@ -18,6 +17,7 @@ const Home: NextPage = () => {
 		e.preventDefault();
 		router.push(`/pokemon/${removeSpecialChars(pokemon)}`);
 	};
+
 	return (
 		<PokesearchTemplate>
 			<main className={styles.main}>
@@ -41,15 +41,7 @@ const Home: NextPage = () => {
 						🔍
 					</button>
 				</form>
-				<Link
-					className={styles.link}
-					legacyBehavior={false}
-					href={"/whos-that-pokemon"}>
-					Try to Guess That Pokémon
-				</Link>
 			</main>
 		</PokesearchTemplate>
 	);
-};
-
-export default Home;
+}
