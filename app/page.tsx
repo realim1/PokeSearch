@@ -1,46 +1,22 @@
-"use client";
-
-import { FormEvent, useState } from "react";
-
-import Image from "next/image";
+import Link from "next/link";
 import PokesearchTemplate from "../templates/PokesearchTemplate/PokesearchTemplate";
-import PokeballImg from "../assets/images/Pokeball.png";
 import styles from "../styles/Home.module.scss";
-import { useRouter } from "next/navigation";
-import { removeSpecialChars } from "../utils/utils";
+import Search from "../components/Search/Search";
 
 export default function Page() {
-	const router = useRouter();
-	const [pokemon, setPokemon] = useState("");
-
-	const onSubmit = (e: FormEvent) => {
-		e.preventDefault();
-		router.push(`/pokemon/${removeSpecialChars(pokemon)}`);
-	};
-
 	return (
 		<PokesearchTemplate>
 			<main className={styles.main}>
-				<Image src={PokeballImg} alt='Pokeball Logo' width={144} height={144} />
-				<h1 className={styles.title}>PokéSearch</h1>
-				<form className={styles.pokemonContainer} onSubmit={onSubmit}>
-					<input
-						type='text'
-						id='pokemon'
-						name='pokemon'
-						placeholder="Enter Pokémon's Name or Id"
-						value={pokemon}
-						className={styles.pokemonInput}
-						onChange={(e) => {
-							setPokemon(e.target.value);
-						}}
-					/>
-					<button
-						disabled={pokemon ? false : true}
-						className={styles.pokemonButton}>
-						🔍
-					</button>
-				</form>
+				<h1 className={styles.title}>
+					<span>Poké</span>Search
+				</h1>
+				<Search />
+				<Link
+					className={`${styles.link} ${styles["pixel-corners--wrapper"]}`}
+					legacyBehavior={false}
+					href={"/whos-that-pokemon"}>
+					Try to Guess That Pokémon
+				</Link>
 			</main>
 		</PokesearchTemplate>
 	);

@@ -1,6 +1,7 @@
 @import "../assets/styles/colors";
 @import "../assets/styles/spacing";
 @import "../assets/styles/animations";
+@import "../assets/styles/fonts";
 
 html,
 body {
@@ -17,6 +18,8 @@ a {
 
 * {
 	box-sizing: border-box;
+	font-family: "summer_pixel_22regular", Arial, sans-serif;
+	text-transform: uppercase;
 }
 
 @media (prefers-color-scheme: dark) {
